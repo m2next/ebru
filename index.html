@@ -16,6 +16,7 @@
         --muted: #5c6370;
         --link: #0b57d0;
         --link-hover: #0842a0;
+        --loader-accent: #95081c;
       }
       @media (prefers-color-scheme: dark) {
         :root {
@@ -43,40 +44,56 @@
         background: var(--bg);
         color: var(--fg);
       }
-      header {
-        text-align: center;
-      }
-      h1 {
-        margin: 0 0 0.75rem;
-        font-size: clamp(1.5rem, 4vw, 2rem);
-        font-weight: 600;
-        letter-spacing: -0.02em;
-      }
       main {
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
       }
-      main p {
-        margin: 0;
+      .loader-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
-      a {
-        color: var(--link);
-        text-decoration-thickness: 0.06em;
-        text-underline-offset: 0.2em;
-        word-break: break-all;
+      .loader {
+        width: 2.75rem;
+        height: 2.75rem;
+        border: 0.22rem solid rgba(0, 0, 0, 0.1);
+        border-top-color: var(--loader-accent);
+        border-radius: 50%;
+        animation: loader-spin 0.75s linear infinite;
       }
-      a:hover {
-        color: var(--link-hover);
+      @media (prefers-color-scheme: dark) {
+        .loader {
+          border-color: rgba(255, 255, 255, 0.12);
+          border-top-color: var(--loader-accent);
+        }
+      }
+      @keyframes loader-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
     </style>
   </head>
   <body>
-    <header>
-      <h1>M2next</h1>
-    </header>
     <main>
-      <p>
-        <a href="https://m2next.ru/" rel="noopener noreferrer">https://m2next.ru/</a>
-      </p>
+      <div class="loader-wrap" role="status" aria-live="polite" aria-busy="true" aria-label="Загрузка">
+        <div class="loader" aria-hidden="true"></div>
+      </div>
+      <a href="https://m2next.ru/" class="sr-only" tabindex="-1">https://m2next.ru/</a>
     </main>
   </body>
 </html>
